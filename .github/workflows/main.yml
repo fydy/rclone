@@ -20,13 +20,6 @@ jobs:
         python-version: '3.x'
     - name: 'Install dependencies'
       run: |
-        python -m pip install --upgrade beautifulsoup4
-        python -m pip install --upgrade requests
-        python -m pip install --upgrade pymysql
-        python -m pip install --upgrade scrapy
-        sudo apt-get install build-essential -y
-        sudo apt-get install libgtk-3-dev -y
-        sudo apt-get install pkg-config -y
         sudo apt-get install fuse -y
         sudo apt install curl ffmpeg -y 
         sudo apt-get install aria2 -y 
@@ -54,4 +47,4 @@ jobs:
         df -hl
         ls
         sudo chmod +x ./ss.sh
-        ./ss.sh
+        sudo ./ss.sh
