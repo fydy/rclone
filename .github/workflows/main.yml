@@ -3,7 +3,7 @@ name: 'googledrive'
 on:
   push:
     branches: 
-       - master
+       - main
 env:
   TZ: Asia/Shanghai
   rc_rclone: ${{ secrets.RCLONE_CONFIG }}
