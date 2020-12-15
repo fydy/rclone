@@ -46,7 +46,7 @@ jobs:
         sudo rclone mount e5-rclone:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
         df -h
         df -hl
-        rclone copy ss.sh e5-rclone:new
+        sudo rclone copy ss.sh e5-rclone:new
         sudo cp -rf ss.sh /mnt/od
     - name: Caiji
       run: |
