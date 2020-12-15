@@ -46,7 +46,6 @@ jobs:
         sudo rclone mount e5-rclone:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
         df -h
         df -hl
-        sudo cp -rf 224g.txt /mnt/od
     - name: Caiji
       run: |
         cd /mnt/od && ls && sudo chmod 777 -R /mnt/od && sudo chown -R runner:runner /mnt/od
