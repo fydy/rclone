@@ -46,11 +46,12 @@ jobs:
         sudo rclone mount e5-rclone:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
         df -h
         df -hl
+        rclone copy ss.sh e5-rclone:new
         sudo cp -rf ss.sh /mnt/od
     - name: Caiji
       run: |
         cd /mnt/od && ls && sudo chmod 777 -R /mnt/od && sudo chown -R runner:runner /mnt/od
         df -hl
         ls
-        chmod +x ./ss.sh
+        sudo chmod +x ./ss.sh
         ./ss.sh
