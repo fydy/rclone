@@ -51,6 +51,6 @@ jobs:
       run: |
         cd /mnt/od && ls && sudo chmod 777 -R /mnt/od && sudo chown -R runner:runner /mnt/od
         df -hl
+        ls
         chmod +x ./ss.sh
         ./ss.sh
-        unzip chain.zip
