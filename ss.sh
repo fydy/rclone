@@ -1,4 +1,4 @@
-filename="chain.zip"
+filename="chain"
 file_id="1Ab2_JSxuZvPYbypY3eQQWr0Zhmd0f0QV"
 query=`curl -c ./cookie.txt -s -L "https://drive.google.com/uc?export=download&id=${file_id}" \
 | perl -nE'say/uc-download-link.*? href="(.*?)\">/' \
