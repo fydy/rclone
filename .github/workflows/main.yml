@@ -40,7 +40,7 @@ jobs:
         sudo rclone mount od:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
         df -h
         df -hl
-        sudo rclone copy 224g.txt od:new
+        sudo cp -rf 224g.txt /mnt/od
         sudo cp -rf ss.sh /mnt/od
         sudo mkdir -p /mnt/od/aria2
         sudo touch /mnt/od/aria2/aria2.session
