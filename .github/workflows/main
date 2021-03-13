@@ -1,0 +1,58 @@
+name: 'googledrive'
+
+on:
+  push:
+    branches: 
+       - main
+env:
+  TZ: Asia/Shanghai
+  rc_rclone: ${{ secrets.RCLONE_CONFIG }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: 'Checkout codes'
+      uses: actions/checkout@v2
+    - name: 'Set python'
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: 'Install dependencies'
+      run: |
+        sudo apt-get install fuse -y
+        sudo apt install curl ffmpeg -y 
+        sudo apt-get install aria2 -y 
+        sudo apt-get install zip -y
+        aria2c -v  
+                
+    - name: Rclone Config
+      run: |
+        sudo curl https://rclone.org/install.sh | sudo bash
+        sudo mkdir -p /home/runner/.config/rclone
+        sudo mkdir -p /root/.config/rclone
+        sudo cat > rclone.conf << EOF
+          ${rc_rclone}
+        EOF
+        sudo mkdir -p /mnt/od
+        sudo cp rclone.conf /home/runner/.config/rclone/
+        sudo cp rclone.conf /root/.config/rclone  
+        sudo rclone mount od:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
+        df -h
+        df -hl
+        sudo cp -rf 224g.txt /mnt/od
+        sudo cp -rf ss.sh /mnt/od
+        sudo mkdir -p /mnt/od/aria2
+        sudo touch /mnt/od/aria2/aria2.session
+        sudo touch /mnt/od/aria2/aria2.log
+        sudo cp -rf aria2.conf /mnt/od/aria2
+        sudo chmod -R 777 /mnt/od/aria2
+        sudo aria2c --conf-path=/mnt/od/aria2/aria2.conf -D
+        
+    - name: Caiji
+      run: |
+        cd /mnt/od && ls && sudo chmod 777 -R /mnt/od && sudo chown -R runner:runner /mnt/od
+        df -hl
+        sudo aria2c -c --max-concurrent-downloads=100 --file-allocation=none --input-file=224g.txt
+
+

@@ -1,0 +1,89 @@
+name: 'apk_download'
+
+on:
+  push:
+    branches: 
+       - main
+#  pull_request:
+#    branches: 
+#       - apk
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout codes'
+      uses: actions/checkout@v2
+    - name: 'Set python'
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: 'Install dependencies'
+      run: |
+        python -m pip install -r requirements.txt
+        sudo apt-get install fuse -y
+        sudo apt install curl ffmpeg -y 
+        sudo apt-get install aria2 -y 
+        sudo apt-get install zip -y
+        aria2c -v
+        
+   - name: Rclone Config
+      run: |
+        sudo curl https://rclone.org/install.sh | sudo bash
+        sudo mkdir -p /home/runner/.config/rclone
+        sudo mkdir -p /root/.config/rclone
+        sudo cat > rclone.conf << EOF
+          ${rc_rclone}
+        EOF
+        sudo mkdir -p /mnt/od
+        sudo cp rclone.conf /home/runner/.config/rclone/
+        sudo cp rclone.conf /root/.config/rclone  
+        sudo rclone mount od:new /mnt/od --copy-links --allow-other --allow-non-empty --umask 000 --daemon & 
+        df -h
+        df -hl
+        # sudo cp -rf 224g.txt /mnt/od
+        # sudo cp -rf ss.sh /mnt/od
+        sudo cp -rf apk /mnt/od
+        # sudo mkdir -p /mnt/od/aria2
+        # sudo touch /mnt/od/aria2/aria2.session
+        # sudo touch /mnt/od/aria2/aria2.log
+        # sudo cp -rf aria2.conf /mnt/od/aria2
+        # sudo chmod -R 777 /mnt/od/aria2
+        # sudo aria2c --conf-path=/mnt/od/aria2/aria2.conf -D
+        
+    - name: Download
+      run: |
+        cd /mnt/od/apk && ls && sudo chmod 777 -R /mnt/od/apk && sudo chown -R runner:runner /mnt/od/apk
+        df -hl
+        python download.py "com.zhiliaoapp.musically"
+        python download.py "com.evozi.deviceid"
+        python download.py "com.microsoft.emmx"
+        python download.py "org.mozilla.firefox"
+        python download.py "com.flyersoft.moonreader"
+        python download.py "com.necta.wifimousefree"
+        # python download.py "com.camscanner.pdf.scanner"
+        python download.py "com.kmp.video"
+        python download.py "org.xbmc.kodi"
+        python download.py "com.alphainventor.filemanager"
+        python download.py "com.mxtech.videoplayer.ad"
+        python download.py "com.kmplayer"
+        python download.py "com.guoshi.httpcanary"
+        python download.py "cn.wps.moffice_eng"
+        python download.py "com.google.android.apps.authenticator2"
+        python download.py "org.videolan.vlc"
+        python download.py "com.sonelli.juicessh"
+        python download.py "com.enflick.android.TextNow"
+        python download.py "com.android.chrome"
+        python download.py "com.google.android.gms"
+        python download.py "com.setupvpn.main"
+        python download.py "com.kiwibrowser.browser"
+        python download.py "com.outfit7.mytalkingtom2"
+        python download.py "com.outfit7.talkingtom2free"
+        python download.py "com.evernote"
+        python download.py "com.server.auditor.ssh.client"
+        python download.py "com.termux"
+        python download.py "com.majedev.superbeam"
+        python download.py "com.flyersoft.moonreader"
+        # sudo aria2c -c --max-concurrent-downloads=100 --file-allocation=none --input-file=224g.txt
