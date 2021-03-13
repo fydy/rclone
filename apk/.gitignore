@@ -134,5 +134,5 @@ ENV/
 
 # Private files
 private_*
-Downloads/
+# Downloads/
 scripts/*.txt

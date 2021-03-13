@@ -4,9 +4,9 @@
 > Play Store.
 
 [![Codacy](https://app.codacy.com/project/badge/Grade/92ff2ab2c1114c7e9df13b77fac0d961)](https://www.codacy.com/gh/ClaudiuGeorgiu/PlaystoreDownloader)
-[![Ubuntu Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/Ubuntu/badge.svg?branch=master)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AUbuntu)
-[![Windows Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/Windows/badge.svg?branch=master)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AWindows)
-[![MacOS Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/MacOS/badge.svg?branch=master)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AMacOS)
+[![Ubuntu Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/Ubuntu/badge.svg)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AUbuntu)
+[![Windows Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/Windows/badge.svg)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AWindows)
+[![MacOS Build Status](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/workflows/MacOS/badge.svg)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/actions?query=workflow%3AMacOS)
 [![Code Coverage](https://codecov.io/gh/ClaudiuGeorgiu/PlaystoreDownloader/badge.svg)](https://codecov.io/gh/ClaudiuGeorgiu/PlaystoreDownloader)
 [![Python Version](https://img.shields.io/badge/Python-3.6%2B-green.svg?logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/blob/master/LICENSE)
@@ -17,8 +17,8 @@
 the Google Play Store. After an initial (one-time) configuration, applications can be
 downloaded by specifying their package name.
 
-***This project is intended for learning purposes only and is not affiliated with Google
-in any way***.
+**_This project is intended for learning purposes only and is not affiliated with Google
+in any way._**
 
 
 
@@ -75,8 +75,8 @@ $ docker tag claudiugeorgiu/playstore-downloader downloader
 #### Install
 
 If you downloaded the official image from Docker Hub, you are ready to use the tool so
-go ahead and check the [usage instructions](#with-docker), otherwise execute the
-following command in the previously created `PlaystoreDownloader/` directory (the folder
+go ahead and check the [usage instructions](#with-docker), otherwise execute the following
+command in the previously created `PlaystoreDownloader/` directory (the folder
 containing the `Dockerfile`) in order to build the Docker image:
 
 ```Shell
@@ -94,8 +94,8 @@ usage: download.py [-h] [-b] [-s] [-c CREDENTIALS] [-o FILE] [-t TAG] package
 ...
 ```
 
-PlaystoreDownloader is now ready to be used, see the [usage instructions](#with-docker)
-for more information.
+PlaystoreDownloader is now ready to be used, see the [usage instructions](#with-docker) for
+more information.
 
 ### From source
 
@@ -104,8 +104,7 @@ for more information.
 #### Prerequisites
 
 Apart from valid Google Play Store credentials, the only requirement of this project is
-a working `Python 3` (at least `3.6`) installation and
-[`pipenv`](https://pipenv.pypa.io/) (for dependency management).
+a working `Python 3` (at least `3.6`) installation.
 
 #### Install
 
@@ -115,25 +114,26 @@ to install the needed dependencies:
 ```Shell
 $ # Make sure to run the commands in PlaystoreDownloader/ directory.
 
-$ # This project uses pipenv (https://pipenv.pypa.io/) for dependency management.
-$ # It can be installed with the following command:
-$ # python3 -m pip install pipenv
+$ # The usage of a virtual environment is highly recommended, e.g., virtualenv.
+$ # If not using virtualenv (https://virtualenv.pypa.io/), skip the next 2 lines.
+$ virtualenv -p python3 venv
+$ source venv/bin/activate
 
-$ # Install PlaystoreDownloader's requirements (a virtual environment will be created).
-$ pipenv install --deploy
+$ # Install PlaystoreDownloader's requirements.
+$ python3 -m pip install -r requirements.txt
 ```
 
-After everything is installed, make a quick test to check that everything works
+After the requirements are installed, make a quick test to check that everything works
 correctly:
 
 ```Shell
-$ pipenv run python download.py --help
+$ python3 download.py --help
 usage: download.py [-h] [-b] [-s] [-c CREDENTIALS] [-o FILE] [-t TAG] package
 ...
 ```
 
-PlaystoreDownloader is now ready to be used, see the [usage instructions](#with-source)
-for more information.
+PlaystoreDownloader is now ready to be used, see the [usage instructions](#with-source) for
+more information.
 
 
 
@@ -173,9 +173,9 @@ download the applications):
 
     - temporarily unlock access to your account (<https://accounts.google.com/DisplayUnlockCaptcha>)
 
-*Note that you will be able to download only the applications compatible with the device
+_Note that you will be able to download only the applications compatible with the device
 corresponding to the aforementioned **ANDROID ID** and further limitations may influence
-the total number of applications available for download*.
+the total number of applications available for download_.
 
 
 
@@ -214,7 +214,7 @@ $ docker run \
     -v "${PWD}/credentials.json":"/app/credentials.json" \
     -v "${PWD}/output/":"/app/Downloads/" \
     -p 5000:5000 \
-    --entrypoint=python \
+    --entrypoint=python3 \
     --rm -it downloader flask_app.py
 
 $ # Navigate to http://localhost:5000/ to use the web interface.
@@ -226,7 +226,7 @@ In the main directory of the project (`PlaystoreDownloader/`), call the followin
 instruction using the package name of the app to be downloaded:
 
 ```Shell
-$ pipenv run python download.py "com.application.example"
+$ python3 download.py "com.application.example"
 ```
 
 If the download is successful, the resulting `.apk` file will be saved in the
@@ -234,13 +234,13 @@ If the download is successful, the resulting `.apk` file will be saved in the
 of the downloaded `.apk` file by providing an additional `-o "path/to/downloaded.apk"`
 argument to
 [download.py](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/blob/master/download.py)
-(type `$ pipenv run python download.py --help` or check the
+(type `$ python3 download.py --help` or check the
 [available parameters](#available-parameters) for more information).
 
 A simple web interface is also available:
 
 ```Shell
-$ pipenv run python flask_app.py
+$ python3 flask_app.py
 
 $ # Navigate to http://localhost:5000/ to use the web interface.
 ```
@@ -254,7 +254,7 @@ $ # With Docker.
 $ docker run --rm -it downloader --help
 
 $ # With source.
-$ pipenv run python download.py --help
+$ python3 download.py --help
 
 usage: download.py [-h] [-b] [-s] [-c CREDENTIALS] [-o FILE] [-t TAG] package
 ...
@@ -274,7 +274,7 @@ downloaded application.
 application (if there are any). See
 [Dynamic Delivery](https://developer.android.com/guide/app-bundle/dynamic-delivery)
 for more information. The additional files will be saved in the same directory as the
-downloaded application. *Note: this feature used to work but currently seems broken*.
+downloaded application. Note: this feature used to work but currently seems broken.
 
 * `-c CREDENTIALS` is used to set the path to the JSON configuration file containing
 the Google Play Store credentials. If not specified, by default the tool will try to
@@ -290,17 +290,16 @@ by using `-t "LABEL"` the final name of the downloaded application will look lik
 `[LABEL] filename.apk`. Note: the tag is applied only to the main application, the
 additional files won't have any tag added to the file name.
 
-*Note that currently only the command line interface is configurable with the above
+_Note that currently only the command line interface is configurable with the above
 arguments, the web interface will ask only for a package name and will use the default
-values for all the other parameters*.
+values for all the other parameters._
 
 
 
 ## ❱ Contributing
 
 Questions, bug reports and pull requests are welcome on GitHub at
-[https://github.com/ClaudiuGeorgiu/PlaystoreDownloader](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader)
-(see [contributing](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader/blob/master/docs/CONTRIBUTING.md)).
+[https://github.com/ClaudiuGeorgiu/PlaystoreDownloader](https://github.com/ClaudiuGeorgiu/PlaystoreDownloader).
 
 
 

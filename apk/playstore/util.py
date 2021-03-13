@@ -3,7 +3,6 @@
 import itertools
 import logging
 import time
-from typing import Iterable
 
 from tqdm import tqdm
 
@@ -42,13 +41,13 @@ class Util(object):
 
         return wrapper
 
-    # When iterating over iterable L, use:
+    # When iterating over list L, use:
     # `for element in show_list_progress(L, interactive=True)`
     # to show a progress bar. When setting `interactive=False`, no progress bar will
     # be shown. While using this method, no other code should write to standard output.
     @staticmethod
     def show_list_progress(
-        the_list: Iterable,
+        the_list: list,
         interactive: bool = False,
         unit: str = "unit",
         total: int = 100,
