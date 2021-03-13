@@ -25,6 +25,7 @@ jobs:
         # pip install -r requirements.txt
         pip install requests
         pip install protobuf
+        pip install crypto
         # sudo apt-get install fuse -y
         # sudo apt install curl ffmpeg -y 
         # sudo apt-get install aria2 -y 
